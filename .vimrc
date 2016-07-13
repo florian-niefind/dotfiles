@@ -84,6 +84,15 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+"copy to system dashboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+"copy from system dashboard
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+"copy entire file contents to system dashboard
+nnoremap <leader>yy ggVG"+y
+
 " Enable folding with the spacebar
 nnoremap <space> za
 
@@ -100,8 +109,10 @@ noremap <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
 " default colorscheme
+syntax enable
 set t_Co=256
-colorscheme zenburn 
+set background=dark
+colorscheme solarized
 
 " set line numbering
 set nu
@@ -149,9 +160,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 
 " let syntax look pretty
 let python_highlight_all=1
-syntax on
 
-"python with virtualenv support
+" make YCM recognize if you are using a virtual environment right now
 py << EOF
 import os
 import sys
