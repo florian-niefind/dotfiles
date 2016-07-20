@@ -62,10 +62,16 @@ nnoremap H ^
 nnoremap L $
 nnoremap $ L
 nnoremap ^ H
+vnoremap H ^
+vnoremap L $
+vnoremap $ L
+vnoremap ^ H
 
-" wrap a word in quotes
+" wrap a word in quotes, stars, dashes
 nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+nnoremap <leader>_ viw<esc>a_<esc>hbi_<esc>lel
+nnoremap <leader>* viw<esc>a*<esc>hbi*<esc>lel
 
 " edit vimrc quickly
 nnoremap <leader>ev :vs $MYVIMRC<cr>
@@ -133,7 +139,7 @@ let g:SimpylFold_docstring_preview=1
 " PEP-8 conform indenting and wrapping for python files
 augroup file_specific_mappings
     autocmd!
-    autocmd BufNewFile,BufRead *.py
+    autocmd BufNewFile,BufRead,BufWinEnter *.py
                 \ set tabstop=4 |
                 \ set softtabstop=4 |
                 \ set shiftwidth=4 |
@@ -143,11 +149,18 @@ augroup file_specific_mappings
                 \ set fileformat=unix |
 
     " Indents for other files
-    autocmd BufNewFile,BufRead *.sql
+    autocmd BufNewFile,BufRead,BufWinEnter *.sql
                 \ set tabstop=2 |
                 \ set softtabstop=2 |
                 \ set shiftwidth=2 |
+                \ set textwidth=79 |
                 \ set expandtab |
+                \ set autoindent |
+
+    " markdown files
+    autocmd BufNewFile,BufRead,BufWinEnter *.md
+                \ set tabstop=4 |
+                \ set textwidth=79 |
                 \ set autoindent |
 augroup end
 
