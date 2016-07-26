@@ -68,10 +68,10 @@ vnoremap $ L
 vnoremap ^ H
 
 " wrap a word in quotes, stars, dashes
-nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-nnoremap <leader>_ viw<esc>a_<esc>hbi_<esc>lel
-nnoremap <leader>* viw<esc>a*<esc>hbi*<esc>lel
+nnoremap <leader>' viW<esc>a'<esc>hbi'<esc>lEl
+nnoremap <leader>" viW<esc>a"<esc>hbi"<esc>lEl
+nnoremap <leader>_ viW<esc>a_<esc>hbi_<esc>lEl
+nnoremap <leader>* viW<esc>a*<esc>hbi*<esc>lEl
 
 " edit vimrc quickly
 nnoremap <leader>ev :vs $MYVIMRC<cr>
