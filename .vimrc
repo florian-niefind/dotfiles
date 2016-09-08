@@ -133,6 +133,10 @@ set encoding=utf-8
 set foldmethod=indent
 set foldlevel=99
 
+" expand tab with spaces always
+set expandtab
+set tabstop=4
+
 " Let the docstrings still be visible for folded code
 let g:SimpylFold_docstring_preview=1
 
@@ -159,7 +163,9 @@ augroup file_specific_mappings
 
     " markdown files
     autocmd BufNewFile,BufRead,BufWinEnter *.md
+                \ set expandtab |
                 \ set tabstop=4 |
+                \ set shiftwidth=4 |
                 \ set textwidth=79 |
                 \ set autoindent |
 augroup end
