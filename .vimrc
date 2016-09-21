@@ -111,7 +111,11 @@ augroup END
 
 " go to definition (needs youcompleteme)
 noremap <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" start NERDTree
+nnoremap <leader>o :NERDTree<cr>
 " }}}
+
 
 
 " default colorscheme
@@ -194,7 +198,7 @@ EOF
 let NERDTreeIgnore=['\.pyc$', '\~$']
 
 "start nerdtree automatically
-autocmd vimenter * NERDTree
+"autocmd vimenter * NERDTree
 
 "syntastic settings
 set statusline+=%#warningmsg#
