@@ -84,6 +84,7 @@ inoremap """ """<cr><cr>"""<up>
 " some useful abbreviations
 :iabbrev @@ florian@zenguard.org
 :iabbrev FN Florian Niefind
+:iabbrev pyhdr #!/usr/bin/env python<cr># -*- coding: utf-8 -*-
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -122,8 +123,8 @@ nnoremap <leader>o :NERDTree<cr>
 " default colorscheme
 syntax enable
 set t_Co=256
-set background=dark
-colorscheme solarized
+"set background=dark
+colorscheme zenburn
 
 " set line numbering
 set nu
