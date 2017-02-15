@@ -25,6 +25,7 @@ Plugin 'tpope/vim-fugitive' "vim and git
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'Valloric/YouCompleteMe' "code completion
 Plugin 'severin-lemaignan/vim-minimap'
+Plugin 'tpope/vim-surround'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -52,7 +53,7 @@ inoremap jw <esc>:w<cr>
 inoremap <esc> <nop>
 
 " uppercase a word in insert mode after typing it
-inoremap <c-u> <esc>viwUea
+inoremap <c-u> <esc>hviwUea
 
 " move lines up and down
 nnoremap <leader>j ddp 
