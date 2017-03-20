@@ -124,8 +124,8 @@ nnoremap <leader>o :NERDTree<cr>
 " default colorscheme
 syntax enable
 set t_Co=256
-"set background=dark
-colorscheme zenburn
+set background=dark
+colorscheme gruvbox
 
 " set line numbering
 set nu
