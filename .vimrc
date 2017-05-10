@@ -24,16 +24,15 @@ Plugin 'kien/ctrlp.vim' "search for anything
 Plugin 'tpope/vim-fugitive' "vim and git
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'Valloric/YouCompleteMe' "code completion
-Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'tpope/vim-surround'
+Plugin 'https://github.com/aperezdc/vim-template'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " }}}
 
-"Customize where splits should occur
-"set splitbelow
+"Customize where splits should occur "set splitbelow
 "set splitright
 
 " after vundle setup switch filetype on again
@@ -58,6 +57,9 @@ inoremap <c-u> <esc>hviwUea
 " move lines up and down
 nnoremap <leader>j ddp 
 nnoremap <leader>k ddkP
+
+" K splits lines as J joins them
+nnoremap K i<cr><esc>
 
 " switch L, H and $ and ^ due to frequency of use
 nnoremap H ^
@@ -175,11 +177,19 @@ augroup file_specific_mappings
                 \ set shiftwidth=4 |
                 \ set textwidth=79 |
                 \ set autoindent |
+
+    " html files
+    autocmd BufNewFile,BufRead,BufWinEnter *.html
+                \ set expandtab |
+                \ set tabstop=4 |
+                \ set shiftwidth=4 |
+                \ set textwidth=79 |
+                \ set autoindent |
 augroup end
 
 " Mark trailing whitespace
 highlight BadWhitespace ctermbg=Red
-autocmd BufNewFile,BufRead *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+autocmd BufNewFile,BufRead *.py,*.pyw,*.sql,*.c,*.h match BadWhitespace /\s\+$/
 
 " close autocompletion window automatically, when finished
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -213,3 +223,5 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ["pylint"]
+
+let g:templates_directory = '/home/florian/.vim/vim_templates/'
