@@ -25,7 +25,8 @@ Plugin 'tpope/vim-fugitive' "vim and git
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'Valloric/YouCompleteMe' "code completion
 Plugin 'tpope/vim-surround'
-Plugin 'https://github.com/aperezdc/vim-template'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -222,6 +223,13 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ["pylint"]
+let g:syntastic_python_checkers = ["flake8"]
 
-let g:templates_directory = '/home/florian/.vim/vim_templates/'
+" ultisnips
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
