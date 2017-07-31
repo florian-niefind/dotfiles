@@ -3,6 +3,7 @@
 # for examples
 
 # add git branch to PS1
+# https://github.com/jimeh/git-aware-prompt
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 source "${GITAWAREPROMPT}/main.sh"
 
