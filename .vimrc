@@ -17,7 +17,7 @@ Plugin 'tmhedberg/SimpylFold' "code folding
 Plugin 'vim-scripts/indentpython.vim' "nice auto-indent
 Plugin 'scrooloose/syntastic' "syntax check
 Plugin 'nvie/vim-flake8' "pep-8 checker
-Plugin 'jnurmine/Zenburn' "zenburn color scheme
+Plugin 'morhetz/gruvbox' "zenburn color scheme
 Plugin 'scrooloose/nerdtree' "file tree
 Plugin 'jistr/vim-nerdtree-tabs' "tabs for the file tree
 Plugin 'kien/ctrlp.vim' "search for anything
@@ -111,7 +111,7 @@ nnoremap <space> za
 " filetype based commenting options
 augroup commenting
 	autocmd!
-	autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
+	autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
 	autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
 augroup END
 
