@@ -25,9 +25,11 @@ Plugin 'tpope/vim-fugitive' "vim and git
 Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Plugin 'Valloric/YouCompleteMe' "code completion
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fireplace'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'https://github.com/kien/rainbow_parentheses.vim'
+Plugin 'https://github.com/mechatroner/rainbow_csv.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -61,7 +63,7 @@ nnoremap <leader>j ddp
 nnoremap <leader>k ddkP
 
 " K splits lines as J joins them
-nnoremap K i<cr><esc>
+"nnoremap K i<cr><esc>
 
 " switch L, H and $ and ^ due to frequency of use
 nnoremap H ^
@@ -187,6 +189,16 @@ augroup file_specific_mappings
                 \ set shiftwidth=4 |
                 \ set textwidth=79 |
                 \ set autoindent |
+
+    " yaml
+    autocmd BufNewFile,BufRead,BufWinEnter *.yml, *.yaml
+                \ set tabstop=2 |
+                \ set softtabstop=2 |
+                \ set shiftwidth=2 |
+                \ set textwidth=79 |
+                \ set expandtab |
+                \ set autoindent |
+                \ set fileformat=unix |
 augroup end
 
 " Mark trailing whitespace
