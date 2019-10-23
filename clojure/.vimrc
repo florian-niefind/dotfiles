@@ -70,22 +70,12 @@ vnoremap L $
 vnoremap $ L
 vnoremap ^ H
 
-" wrap a word in quotes, stars, dashes
-nnoremap <leader>' viW<esc>a'<esc>hbi'<esc>lEl
-nnoremap <leader>" viW<esc>a"<esc>hbi"<esc>lEl
-nnoremap <leader>_ viW<esc>a_<esc>hbi_<esc>lEl
-nnoremap <leader>* viW<esc>a*<esc>hbi*<esc>lEl
-
 " edit vimrc quickly
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " python docstrings
 inoremap """ """<cr><cr>"""<up>
-
-" some useful abbreviations
-:iabbrev @@ florian@zenguard.org
-:iabbrev FN Florian Niefind
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -107,13 +97,8 @@ augroup commenting
 	autocmd!
 	autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
 	autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
+	autocmd FileType clj nnoremap <buffer> <localleader>c I;<esc>
 augroup END
-
-" start NERDTree
-nnoremap <leader>o :NERDTree<cr>
-" }}}
-
-
 
 " default colorscheme
 syntax enable
@@ -179,12 +164,6 @@ augroup end
 " Mark trailing whitespace
 highlight BadWhitespace ctermbg=Red
 autocmd BufNewFile,BufRead *.* match BadWhitespace /\s\+$/
-
-"ignore files in NERDTree
-let NERDTreeIgnore=['\.pyc$', '\~$']
-
-"start nerdtree automatically
-"autocmd vimenter * NERDTree
 
 " Clojure stuff
 " Rainbow parens
