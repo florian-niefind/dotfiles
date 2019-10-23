@@ -1,5 +1,5 @@
 set nocompatible              " required
-filetype off                  " required 
+filetype off                  " required
 
 " vundle stuff ------------------------------------ {{{
 " set the runtime path to include Vundle and initialize
@@ -14,13 +14,17 @@ Plugin 'gmarik/Vundle.vim'
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 Plugin 'morhetz/gruvbox' "gruvbox color scheme
-Plugin 'scrooloose/nerdtree' "file tree
-Plugin 'jistr/vim-nerdtree-tabs' "tabs for the file tree
 Plugin 'kien/ctrlp.vim' "search for anything
 Plugin 'tpope/vim-fugitive' "vim and git
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-surround'
-Plugin 'https://github.com/kien/rainbow_parentheses.vim'
+Plugin 'tpope/vim-repeat.git'
+Plugin 'tpope/vim-fireplace'
+Plugin 'vim-scripts/paredit.vim'
+Plugin 'guns/vim-sexp.git'
+Plugin 'tpope/vim-sexp-mappings-for-regular-people'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'mechatroner/rainbow_csv'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -50,7 +54,7 @@ inoremap <esc> <nop>
 inoremap <c-u> <esc>hviwUea
 
 " move lines up and down
-nnoremap <leader>j ddp 
+nnoremap <leader>j ddp
 nnoremap <leader>k ddkP
 
 " K splits lines as J joins them
@@ -174,7 +178,7 @@ augroup end
 
 " Mark trailing whitespace
 highlight BadWhitespace ctermbg=Red
-autocmd BufNewFile,BufRead *.py,*.pyw,*.sql,*.c,*.h match BadWhitespace /\s\+$/
+autocmd BufNewFile,BufRead *.* match BadWhitespace /\s\+$/
 
 "ignore files in NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$']
