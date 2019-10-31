@@ -129,6 +129,10 @@ alias monoff="xrandr --output DP3 --off"
 
 export PATH=$PATH:~/bin/
 
+# fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+
 # NU stuff
 alias sounu='cd ~/dev/nu'
 source ~/.nurc

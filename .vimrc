@@ -1,41 +1,35 @@
 set nocompatible              " required
 filetype off                  " required
 
-" vundle stuff ------------------------------------ {{{
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" vim-plug stuff ------------------------------------ {{{
+" install vim plug automatically if it is not installed yet
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" general plugins
+Plug 'morhetz/gruvbox' "gruvbox color scheme
+Plug 'tpope/vim-fugitive' "vim and git
+Plug 'vim-airline/vim-airline'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'junegunn/fzf.vim'
 
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
-Plugin 'morhetz/gruvbox' "gruvbox color scheme
-Plugin 'kien/ctrlp.vim' "search for anything
-Plugin 'tpope/vim-fugitive' "vim and git
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat.git'
-Plugin 'tpope/vim-fireplace'
-Plugin 'vim-scripts/paredit.vim'
-Plugin 'guns/vim-sexp.git'
-Plugin 'tpope/vim-sexp-mappings-for-regular-people'
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'mechatroner/rainbow_csv'
+" clojure specific plugins
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
+Plug 'tpope/vim-surround', {'for': 'clojure'}
+Plug 'tpope/vim-repeat', {'for': 'clojure'}
+Plug 'guns/vim-sexp', {'for': 'clojure'}
+Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" }}}
+Plug 'mechatroner/rainbow_csv', {'for': 'csv'}
 
-"Customize where splits should occur "set splitbelow
-"set splitright
+call plug#end()
 
-" after vundle setup switch filetype on again
-filetype on
 
 " leader key stuff
 let mapleader = ","
@@ -98,7 +92,7 @@ augroup commenting
 	autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
 	autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
 	autocmd FileType clj nnoremap <buffer> <localleader>c I;<esc>
-augroup END
+augroup end
 
 " default colorscheme
 syntax enable
@@ -107,7 +101,7 @@ set background=dark
 colorscheme gruvbox
 
 " set line numbering
-set nu
+set nu rnu
 
 " access system clipboard instead of vim internal clipboard
 set clipboard=unnamed
