@@ -1,0 +1,74 @@
+set nocompatible              " required
+filetype off                  " required
+
+" leader key stuff
+let mapleader = ","
+let maplocalleader = "\\"
+set showcmd "show when the leader key is pressed
+
+" my remaps ----------------------------------- {{{
+" remap leaving insert mode
+inoremap jk <esc>
+" leave insert mode and save
+inoremap jw <esc>:w<cr>
+" unmap the esc key
+inoremap <esc> <nop>
+
+" uppercase a word in insert mode after typing it
+inoremap <c-u> <esc>hviwUea
+
+" move lines up and down
+nnoremap <leader>j ddp
+nnoremap <leader>k ddkP
+
+" K splits lines as J joins them
+nnoremap K i<cr><esc>
+
+" switch L, H and $ and ^ due to frequency of use
+nnoremap H ^
+nnoremap L $
+nnoremap $ L
+nnoremap ^ H
+vnoremap H ^
+vnoremap L $
+vnoremap $ L
+vnoremap ^ H
+
+" edit vimrc quickly
+nnoremap <leader>ev :vs $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" python docstrings
+inoremap """ """<cr><cr>"""<up>
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+"copy to system dashboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+"copy from system dashboard
+nnoremap <leader>p "+p
+vnoremap <leader>p "+p
+"copy entire file contents to system dashboard
+nnoremap <leader>yy ggVG"+y
+
+" set line numbering
+set nu rnu
+
+" access system clipboard instead of vim internal clipboard
+set clipboard=unnamed
+
+" utf-8!
+set encoding=utf-8
+
+" folding based on indents
+set foldmethod=indent
+set foldlevel=99
+
+" expand tab with spaces always
+set expandtab
+set tabstop=2

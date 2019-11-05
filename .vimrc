@@ -120,6 +120,15 @@ set tabstop=2
 " PEP-8 conform indenting and wrapping for python files
 augroup file_specific_mappings
     autocmd!
+    autocmd BufNewFile,BufRead,BufWinEnter *.clj
+                \ set tabstop=2 |
+                \ set softtabstop=2 |
+                \ set shiftwidth=2 |
+                \ set textwidth=79 |
+                \ set expandtab |
+                \ set autoindent |
+                \ set fileformat=unix |
+
     autocmd BufNewFile,BufRead,BufWinEnter *.py
                 \ set tabstop=4 |
                 \ set softtabstop=4 |
@@ -165,3 +174,6 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+" cljfmt
+let g:clj_fmt_autosave = 0
