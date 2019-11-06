@@ -87,7 +87,7 @@ SPACESHIP_EXIT_CODE_SHOW=true
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git lein)
+plugins=(git lein vi-mode)
 
 source $ZSH/oh-my-zsh.sh
 
