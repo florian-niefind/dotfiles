@@ -4,9 +4,9 @@ filetype off                  " required
 " vim-plug stuff ------------------------------------ {{{
 " install vim plug automatically if it is not installed yet
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -26,7 +26,11 @@ Plug 'tpope/vim-repeat', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
+Plug 'godlygeek/tabular', {'for': 'md'}
+Plug 'plasticboy/vim-markdown', {'for': 'md'}
 Plug 'mechatroner/rainbow_csv', {'for': 'csv'}
+
+Plug 'jalvesaq/Nvim-R', {'for': 'R'}
 
 call plug#end()
 
@@ -69,7 +73,6 @@ nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " python docstrings
-inoremap """ """<cr><cr>"""<up>
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -86,12 +89,20 @@ vnoremap <leader>p "+p
 "copy entire file contents to system dashboard
 nnoremap <leader>yy ggVG"+y
 
+" ag and fzf
+nnoremap <leader>f :Files<cr>
+nnoremap <leader>a :Ag<cr>
+
 " filetype based commenting options
-augroup commenting
-	autocmd!
-	autocmd FileType python nnoremap <buffer> <localleader>c I# <esc>
-	autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
-	autocmd FileType clj nnoremap <buffer> <localleader>c I;<esc>
+augroup file_specific_keystrokes
+        autocmd!
+        autocmd FileType python
+                                \ nnoremap <buffer> <localleader>c I# <esc> |
+                                \ inoremap """ """<cr><cr>"""<up> |
+        autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
+        autocmd FileType clj
+                                \ nnoremap <leader>r :Require<cr> |
+                                \ nnoremap <buffer> <localleader>c I;<esc> |
 augroup end
 
 " default colorscheme
@@ -118,50 +129,59 @@ set expandtab
 set tabstop=2
 
 " PEP-8 conform indenting and wrapping for python files
-augroup file_specific_mappings
-    autocmd!
-    autocmd BufNewFile,BufRead,BufWinEnter *.clj
-                \ set tabstop=2 |
-                \ set softtabstop=2 |
-                \ set shiftwidth=2 |
-                \ set textwidth=79 |
-                \ set expandtab |
-                \ set autoindent |
-                \ set fileformat=unix |
+augroup file_specific_layouts
+        autocmd!
+        autocmd BufNewFile,BufRead,BufWinEnter *.clj
+                                \ set tabstop=2 |
+                                \ set softtabstop=2 |
+                                \ set shiftwidth=2 |
+                                \ set textwidth=79 |
+                                \ set expandtab |
+                                \ set autoindent |
+                                \ set fileformat=unix |
 
-    autocmd BufNewFile,BufRead,BufWinEnter *.py
-                \ set tabstop=4 |
-                \ set softtabstop=4 |
-                \ set shiftwidth=4 |
-                \ set textwidth=79 |
-                \ set expandtab |
-                \ set autoindent |
-                \ set fileformat=unix |
+        autocmd BufNewFile,BufRead,BufWinEnter *.py
+                                \ set tabstop=4 |
+                                \ set softtabstop=4 |
+                                \ set shiftwidth=4 |
+                                \ set textwidth=79 |
+                                \ set expandtab |
+                                \ set autoindent |
+                                \ set fileformat=unix |
 
-    " Indents for other files
-    autocmd BufNewFile,BufRead,BufWinEnter *.sql
-                \ set tabstop=2 |
-                \ set softtabstop=2 |
-                \ set shiftwidth=2 |
-                \ set textwidth=79 |
-                \ set expandtab |
-                \ set autoindent |
+        autocmd BufNewFile,BufRead,BufWinEnter *.R
+                                \ set tabstop=2 |
+                                \ set softtabstop=2 |
+                                \ set shiftwidth=2 |
+                                \ set textwidth=79 |
+                                \ set expandtab |
+                                \ set autoindent |
+                                \ set fileformat=unix |
 
-    " markdown files
-    autocmd BufNewFile,BufRead,BufWinEnter *.md
-                \ set expandtab |
-                \ set tabstop=4 |
-                \ set shiftwidth=4 |
-                \ set textwidth=79 |
-                \ set autoindent |
+        " Indents for other files
+        autocmd BufNewFile,BufRead,BufWinEnter *.sql
+                                \ set tabstop=2 |
+                                \ set softtabstop=2 |
+                                \ set shiftwidth=2 |
+                                \ set textwidth=79 |
+                                \ set expandtab |
+                                \ set autoindent |
 
-    " html files
-    autocmd BufNewFile,BufRead,BufWinEnter *.html
-                \ set expandtab |
-                \ set tabstop=4 |
-                \ set shiftwidth=4 |
-                \ set textwidth=79 |
-                \ set autoindent |
+        " markdown files
+        autocmd BufNewFile,BufRead,BufWinEnter *.md
+                                \ set expandtab |
+                                \ set tabstop=4 |
+                                \ set shiftwidth=4 |
+                                \ set textwidth=79 |
+                                \ set autoindent |
+
+        " html files
+        autocmd BufNewFile,BufRead,BufWinEnter *.html
+                                \ set expandtab |
+                                \ set tabstop=4 |
+                                \ set shiftwidth=4 |
+                                \ set textwidth=79 |
+                                \ set autoindent |
 augroup end
 
 " Mark trailing whitespace

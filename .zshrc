@@ -124,8 +124,11 @@ export SSH_KEY_PATH='~/.ssh/id_rsa'
 
 alias ll='ls -alh --color=auto'
 
+# xrandr
 alias monon="xrandr --output DP3 --left-of eDP1 --auto"
 alias monoff="xrandr --output DP3 --off"
+alias deskmon="xrandr --output DP3 --auto --output eDP1 --off"
+alias lapmon="xrandr --output eDP1 --auto --output DP3 --off"
 
 export PATH=$PATH:~/bin/
 
