@@ -1,5 +1,5 @@
 set nocompatible              " required
-filetype off                  " required
+set hidden
 
 " vim-plug stuff ------------------------------------ {{{
 " install vim plug automatically if it is not installed yet
@@ -20,15 +20,22 @@ Plug 'junegunn/fzf.vim'
 
 " clojure specific plugins
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
 Plug 'tpope/vim-surround', {'for': 'clojure'}
 Plug 'tpope/vim-repeat', {'for': 'clojure'}
 Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
+Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
+
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'clojure'}
+
+" python plugins
+Plug 'tmhedberg/simpylfold', {'for': 'python'}
+
+" others
 Plug 'godlygeek/tabular', {'for': 'md'}
-Plug 'plasticboy/vim-markdown', {'for': 'md'}
-Plug 'mechatroner/rainbow_csv', {'for': 'csv'}
+Plug 'plasticboy/vim-markdown', {'for': ['md', 'Rmd']}
+Plug 'mechatroner/rainbow_csv'
 
 Plug 'jalvesaq/Nvim-R', {'for': 'R'}
 
@@ -39,6 +46,9 @@ call plug#end()
 let mapleader = ","
 let maplocalleader = "\\"
 set showcmd "show when the leader key is pressed
+
+
+set scrolloff=5
 
 " my remaps ----------------------------------- {{{
 " remap leaving insert mode
@@ -55,9 +65,6 @@ inoremap <c-u> <esc>hviwUea
 nnoremap <leader>j ddp
 nnoremap <leader>k ddkP
 
-" K splits lines as J joins them
-nnoremap K i<cr><esc>
-
 " switch L, H and $ and ^ due to frequency of use
 nnoremap H ^
 nnoremap L $
@@ -71,8 +78,6 @@ vnoremap ^ H
 " edit vimrc quickly
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" python docstrings
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -100,7 +105,7 @@ augroup file_specific_keystrokes
                                 \ nnoremap <buffer> <localleader>c I# <esc> |
                                 \ inoremap """ """<cr><cr>"""<up> |
         autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
-        autocmd FileType clj
+        autocmd FileType clojure
                                 \ nnoremap <leader>r :Require<cr> |
                                 \ nnoremap <buffer> <localleader>c I;<esc> |
 augroup end
@@ -121,6 +126,8 @@ set clipboard=unnamed
 set encoding=utf-8
 
 " folding based on indents
+nnoremap <space> za
+set foldenable
 set foldmethod=indent
 set foldlevel=99
 
@@ -128,10 +135,14 @@ set foldlevel=99
 set expandtab
 set tabstop=2
 
+" tab cycles through popupmenu entries
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
 " PEP-8 conform indenting and wrapping for python files
 augroup file_specific_layouts
         autocmd!
-        autocmd BufNewFile,BufRead,BufWinEnter *.clj
+        autocmd BufNewFile,BufRead,BufWinEnter *.R,*.sql
                                 \ set tabstop=2 |
                                 \ set softtabstop=2 |
                                 \ set shiftwidth=2 |
@@ -149,34 +160,7 @@ augroup file_specific_layouts
                                 \ set autoindent |
                                 \ set fileformat=unix |
 
-        autocmd BufNewFile,BufRead,BufWinEnter *.R
-                                \ set tabstop=2 |
-                                \ set softtabstop=2 |
-                                \ set shiftwidth=2 |
-                                \ set textwidth=79 |
-                                \ set expandtab |
-                                \ set autoindent |
-                                \ set fileformat=unix |
-
-        " Indents for other files
-        autocmd BufNewFile,BufRead,BufWinEnter *.sql
-                                \ set tabstop=2 |
-                                \ set softtabstop=2 |
-                                \ set shiftwidth=2 |
-                                \ set textwidth=79 |
-                                \ set expandtab |
-                                \ set autoindent |
-
-        " markdown files
-        autocmd BufNewFile,BufRead,BufWinEnter *.md
-                                \ set expandtab |
-                                \ set tabstop=4 |
-                                \ set shiftwidth=4 |
-                                \ set textwidth=79 |
-                                \ set autoindent |
-
-        " html files
-        autocmd BufNewFile,BufRead,BufWinEnter *.html
+        autocmd BufNewFile,BufRead,BufWinEnter *.md,*.html,*.Rmd
                                 \ set expandtab |
                                 \ set tabstop=4 |
                                 \ set shiftwidth=4 |
@@ -184,16 +168,66 @@ augroup file_specific_layouts
                                 \ set autoindent |
 augroup end
 
+autocmd BufWritePre * %s/\s\+$//e
+
 " Mark trailing whitespace
 highlight BadWhitespace ctermbg=Red
 autocmd BufNewFile,BufRead *.* match BadWhitespace /\s\+$/
 
 " Clojure stuff
 " Rainbow parens
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
+let g:rbpt_max = 16
+
+augroup RainbowParens
+        autocmd!
+        au VimEnter * RainbowParenthesesToggle
+        au Syntax * RainbowParenthesesLoadRound
+        au Syntax * RainbowParenthesesLoadSquare
+        au Syntax * RainbowParenthesesLoadBraces
+augroup end
 
 " cljfmt
 let g:clj_fmt_autosave = 0
+
+
+" simpylfold see docstrings
+let g:SimpylFold_docstring_preview=1
+
+" nvim R
+" double underscore is replaced by '<-'
+let R_assign = 2
+
+
+" coc
+let g:airline#extensions#coc#enabled = 1
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <leader>rn <Plug>(coc-rename)
+
+" language server
+" highlight symbol under cursor
+set updatetime=1000
+autocmd CursorHold  * silent call CocActionAsync('highlight')
+autocmd CursorHoldI * silent call CocActionAsync('highlight')
+

@@ -5,3 +5,5 @@ exec dbus-launch i3
 xrdb -merge ~/.Xresources
 
 xrandr --output eDP1 --scale 0.75x0.75
+
+exec --no-startup-id stretch

@@ -136,6 +136,20 @@ export PATH=$PATH:~/bin/
 source /usr/share/fzf/key-bindings.zsh
 source /usr/share/fzf/completion.zsh
 
+# ssh agent
+# i start it with a daemon, so it should work without this
+#if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+#    ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+#fi
+#if [[ ! "$SSH_AUTH_SOCK" ]]; then
+#    eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
+#fi
+
 # NU stuff
 alias sounu='cd ~/dev/nu'
 source ~/.nurc
+
+# jenv
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
