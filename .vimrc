@@ -1,7 +1,9 @@
 set nocompatible              " required
 set hidden
+syntax on
+filetype plugin indent on
 
-" vim-plug stuff ------------------------------------ {{{
+" vim-plug stuff ------------------------------------
 " install vim plug automatically if it is not installed yet
 if empty(glob('~/.vim/autoload/plug.vim'))
         silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -17,6 +19,7 @@ Plug 'tpope/vim-fugitive' "vim and git
 Plug 'vim-airline/vim-airline'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " clojure specific plugins
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
@@ -27,7 +30,6 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
 Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " python plugins
 Plug 'tmhedberg/simpylfold', {'for': 'python'}
@@ -41,16 +43,41 @@ Plug 'jalvesaq/Nvim-R', {'for': 'R'}
 
 call plug#end()
 
-
+" general settings ----------------------------
 " leader key stuff
 let mapleader = ","
 let maplocalleader = "\\"
 set showcmd "show when the leader key is pressed
 
-
+" show five lines in the end at least
 set scrolloff=5
 
-" my remaps ----------------------------------- {{{
+" default colorscheme
+set t_Co=256
+set background=dark
+colorscheme gruvbox
+
+" set line numbering
+set nu rnu
+
+" access system clipboard instead of vim internal clipboard
+set clipboard=unnamed
+
+" utf-8!
+set encoding=utf-8
+
+" expand tab with spaces always
+set expandtab
+set tabstop=2
+
+" folding based on indents
+nnoremap <space> za
+set foldenable
+set foldmethod=indent
+set foldlevel=99
+
+
+" my remaps -----------------------------------
 " remap leaving insert mode
 inoremap jk <esc>
 " leave insert mode and save
@@ -98,6 +125,13 @@ nnoremap <leader>yy ggVG"+y
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>a :Ag<cr>
 
+" tab cycles through popupmenu entries
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+
+" autocommands -----------------------------------
+
 " filetype based commenting options
 augroup file_specific_keystrokes
         autocmd!
@@ -109,35 +143,6 @@ augroup file_specific_keystrokes
                                 \ nnoremap <leader>r :Require<cr> |
                                 \ nnoremap <buffer> <localleader>c I;<esc> |
 augroup end
-
-" default colorscheme
-syntax enable
-set t_Co=256
-set background=dark
-colorscheme gruvbox
-
-" set line numbering
-set nu rnu
-
-" access system clipboard instead of vim internal clipboard
-set clipboard=unnamed
-
-" utf-8!
-set encoding=utf-8
-
-" folding based on indents
-nnoremap <space> za
-set foldenable
-set foldmethod=indent
-set foldlevel=99
-
-" expand tab with spaces always
-set expandtab
-set tabstop=2
-
-" tab cycles through popupmenu entries
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
 
 " PEP-8 conform indenting and wrapping for python files
 augroup file_specific_layouts
@@ -168,13 +173,15 @@ augroup file_specific_layouts
                                 \ set autoindent |
 augroup end
 
+" remove trailing whitespace automatically
 autocmd BufWritePre * %s/\s\+$//e
 
 " Mark trailing whitespace
 highlight BadWhitespace ctermbg=Red
 autocmd BufNewFile,BufRead *.* match BadWhitespace /\s\+$/
 
-" Clojure stuff
+
+" Plugin specific settings -----------------------------------
 " Rainbow parens
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
@@ -204,10 +211,6 @@ augroup RainbowParens
         au Syntax * RainbowParenthesesLoadSquare
         au Syntax * RainbowParenthesesLoadBraces
 augroup end
-
-" cljfmt
-let g:clj_fmt_autosave = 0
-
 
 " simpylfold see docstrings
 let g:SimpylFold_docstring_preview=1
