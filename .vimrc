@@ -27,7 +27,7 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
 Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
 
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'for': 'clojure'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " python plugins
 Plug 'tmhedberg/simpylfold', {'for': 'python'}
@@ -230,4 +230,3 @@ nmap <leader>rn <Plug>(coc-rename)
 set updatetime=1000
 autocmd CursorHold  * silent call CocActionAsync('highlight')
 autocmd CursorHoldI * silent call CocActionAsync('highlight')
-
