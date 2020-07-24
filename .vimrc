@@ -29,6 +29,7 @@ Plug 'guns/vim-sexp', {'for': 'clojure'}
 Plug 'tpope/vim-sexp-mappings-for-regular-people', {'for': 'clojure'}
 
 Plug 'vim-scripts/paredit.vim', {'for': 'clojure'}
+Plug 'dense-analysis/ale', {'for': 'clojure'}
 
 
 " python plugins
@@ -52,10 +53,9 @@ set showcmd "show when the leader key is pressed
 " show five lines in the end at least
 set scrolloff=5
 
-" default colorscheme
 set t_Co=256
+set termguicolors
 set background=dark
-colorscheme gruvbox
 
 " set line numbering
 set nu rnu
@@ -140,7 +140,7 @@ augroup file_specific_keystrokes
                                 \ inoremap """ """<cr><cr>"""<up> |
         autocmd FileType sql nnoremap <buffer> <localleader>c I--<esc>
         autocmd FileType clojure
-                                \ nnoremap <leader>r :Require<cr> |
+                                \ nnoremap <leader>rq :Require<cr> |
                                 \ nnoremap <buffer> <localleader>c I;<esc> |
 augroup end
 
@@ -182,27 +182,35 @@ autocmd BufNewFile,BufRead *.* match BadWhitespace /\s\+$/
 
 
 " Plugin specific settings -----------------------------------
+" gruvbox
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_italic=1
+
+" default colorscheme
+colorscheme gruvbox
+
 " Rainbow parens
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
+    \ ['brown',      '#fb4934'],
+    \ ['Darkblue',   '#b8bb26'],
+    \ ['darkgray',   '#fabd2f'],
+    \ ['darkgreen',  '#83a598'],
+    \ ['darkcyan',   '#d3869b'],
+    \ ['darkred',    '#8ec07c'],
+    \ ['darkmagenta','#fe8019'],
+    \ ['brown',      '#a89984'],
+    \ ['gray',       '#cc241d'],
+    \ ['black',      '#98971a'],
+    \ ['darkmagenta','#d79921'],
+    \ ['Darkblue',   '#458588'],
+    \ ['darkgreen',  '#b16286'],
+    \ ['darkcyan',   '#689d6a'],
+    \ ['darkred',    '#d65d0e'],
+    \ ['red',        '#928374'],
     \ ]
 
 let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
 
 augroup RainbowParens
         autocmd!
@@ -210,6 +218,7 @@ augroup RainbowParens
         au Syntax * RainbowParenthesesLoadRound
         au Syntax * RainbowParenthesesLoadSquare
         au Syntax * RainbowParenthesesLoadBraces
+        au Syntax * RainbowParenthesesLoadChevrons
 augroup end
 
 " simpylfold see docstrings
@@ -227,6 +236,8 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 
 nmap <silent> gd <Plug>(coc-definition)
 nmap <leader>rn <Plug>(coc-rename)
+nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>d  :<C-u>CocList diagnostics<cr>
 
 " language server
 " highlight symbol under cursor
